@@ -1,0 +1,35 @@
+.movieDetails {
+  padding: 20px;
+}
+
+.goBack {
+  display: inline-block;
+  margin-bottom: 10px;
+  font-size: 15px;
+  padding: 5px;
+  text-decoration: none;
+  color: black;
+  background-color: rgba(241, 241, 241, 0.897);
+  border-radius: 5px;
+  border: solid 1px black;
+}
+
+.movieInfo {
+  display: flex; /* Użyj flexbox do ułożenia elementów w wierszu */
+  align-items: flex-start; /* Wyrównanie w pionie */
+}
+
+.movieInfo img {
+  margin-right: 20px; /* Odstęp między obrazkiem a informacjami */
+  width: 200px; /* Szerokość obrazka */
+  height: auto; /* Automatyczna wysokość */
+}
+
+.movieText {
+  /* Opcjonalne dodatkowe stylizacje dla tekstu */
+  max-width: 600px; /* Możesz ustawić maksymalną szerokość, aby tekst się nie rozciągał za bardzo */
+}
+
+.movieInfo h2 {
+  margin: 0; /* Usuń domyślne marginesy */
+}

@@ -1,6 +1,7 @@
-import { useParams, Outlet, Link } from "react-router-dom";
-import { useState, useEffect } from "react";
-import { getMovieDetails } from "../Api";
+import { useEffect, useState } from "react";
+import { useParams, Link } from "react-router-dom";
+import { getMovieDetails } from "../Api"; // Upewnij się, że masz tę funkcję
+import styles from "./MovieDetailsPage.module.css"; // Importuj style, jeśli je używasz
 
 function MovieDetailsPage() {
   const { movieId } = useParams();
@@ -19,18 +20,22 @@ function MovieDetailsPage() {
   if (error) return <p>Error loading movie details.</p>;
 
   return (
-    <div>
-      <h1>{movie.title}</h1>
-      <img
-        src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}
-        alt={movie.title}
-      />
-      <p>{movie.overview}</p>
-      <nav>
-        <Link to="cast">Cast</Link>
-        <Link to="reviews">Reviews</Link>
-      </nav>
-      <Outlet />
+    <div className={styles.movieDetails}>
+      <Link to="/" className={styles.goBack}>
+        &larr; Go back
+      </Link>
+      <div className={styles.movieInfo}>
+        <img
+          src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}
+          alt={movie.title}
+        />
+        <div className={styles.movieText}>
+          <h2>{movie.title}</h2>
+          <p>User Score: {movie.vote_average * 10}%</p>
+          <p>Overview: {movie.overview}</p>
+          <p>Genres: {movie.genres.map((genre) => genre.name).join(", ")}</p>
+        </div>
+      </div>
     </div>
   );
 }
