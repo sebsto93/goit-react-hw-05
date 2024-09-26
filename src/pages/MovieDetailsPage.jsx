@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
-import { useParams, Link } from "react-router-dom";
-import { getMovieDetails } from "../Api"; // Upewnij się, że masz tę funkcję
-import styles from "./MovieDetailsPage.module.css"; // Importuj style, jeśli je używasz
+import { useParams, Link, NavLink, Outlet } from "react-router-dom";
+import { getMovieDetails } from "../Api";
+import styles from "./MovieDetailsPage.module.css";
 
 function MovieDetailsPage() {
   const { movieId } = useParams();
@@ -36,6 +36,18 @@ function MovieDetailsPage() {
           <p>Genres: {movie.genres.map((genre) => genre.name).join(", ")}</p>
         </div>
       </div>
+      <div className={styles.subNavContainer}>
+        <h5>Additional Information</h5>
+        <nav className={styles.subNav}>
+          <NavLink to={`cast`} className={styles.navLink}>
+            Cast
+          </NavLink>
+          <NavLink to={`reviews`} className={styles.navLink}>
+            Reviews
+          </NavLink>
+        </nav>
+      </div>
+      <Outlet /> {/* To render nested routes (Cast and Reviews) */}
     </div>
   );
 }

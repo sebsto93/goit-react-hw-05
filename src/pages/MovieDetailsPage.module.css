@@ -1,5 +1,6 @@
 .movieDetails {
   padding: 20px;
+  border-bottom: 2px solid black;
 }
 
 .goBack {
@@ -15,21 +16,39 @@
 }
 
 .movieInfo {
-  display: flex; /* Użyj flexbox do ułożenia elementów w wierszu */
-  align-items: flex-start; /* Wyrównanie w pionie */
+  display: flex;
+  align-items: flex-start;
 }
 
 .movieInfo img {
-  margin-right: 20px; /* Odstęp między obrazkiem a informacjami */
-  width: 200px; /* Szerokość obrazka */
-  height: auto; /* Automatyczna wysokość */
+  margin-right: 20px;
+  width: 200px;
+  height: auto;
 }
 
 .movieText {
-  /* Opcjonalne dodatkowe stylizacje dla tekstu */
-  max-width: 600px; /* Możesz ustawić maksymalną szerokość, aby tekst się nie rozciągał za bardzo */
+  max-width: 600px;
 }
 
 .movieInfo h2 {
-  margin: 0; /* Usuń domyślne marginesy */
+  margin: 0;
+}
+
+.subNavContainer {
+  margin-top: 20px;
+  border-top: 2px solid black;
+}
+
+.subNav {
+  display: flex;
+  gap: 15px;
+}
+
+.navLink {
+  text-decoration: none;
+  color: #007bff;
+}
+
+.navLink:hover {
+  text-decoration: underline;
 }
