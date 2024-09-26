@@ -47,7 +47,7 @@ function MovieDetailsPage() {
           </NavLink>
         </nav>
       </div>
-      <Outlet /> {/* To render nested routes for cast and reviews */}
+      <Outlet />
     </div>
   );
 }
