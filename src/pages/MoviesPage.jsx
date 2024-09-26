@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { useSearchParams } from "react-router-dom";
 import { searchMovies } from "../Api";
 import MovieList from "../components/MovieList";
+import styles from "./MoviesPage.module.css";
 
 function MoviesPage() {
   const [movies, setMovies] = useState([]);
@@ -32,15 +33,18 @@ function MoviesPage() {
   if (error) return <p>Error loading movies.</p>;
 
   return (
-    <div>
-      <form onSubmit={handleSearch}>
+    <div className={styles.moviesPage}>
+      <form onSubmit={handleSearch} className={styles.searchForm}>
         <input
           name="query"
           type="text"
           placeholder="Search movies..."
           defaultValue={query}
+          className={styles.searchInput}
         />
-        <button type="submit">Search</button>
+        <button type="submit" className={styles.searchButton}>
+          Search
+        </button>
       </form>
       <MovieList movies={movies} />
     </div>
