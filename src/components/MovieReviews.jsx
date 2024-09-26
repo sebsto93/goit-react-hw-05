@@ -1,54 +1,36 @@
-import React, { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import axios from "axios";
+import { getMovieReviews } from "../Api"; // Załóżmy, że masz funkcję, która pobiera recenzje
 
-const MovieReviews = () => {
+function MovieReviews() {
   const { movieId } = useParams();
   const [reviews, setReviews] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    const fetchReviews = async () => {
-      try {
-        setLoading(true);
-        const response = await axios.get(
-          `https://api.themoviedb.org/3/movie/${movieId}/reviews`,
-          {
-            headers: {
-              Authorization: "Bearer b910f513a7d30f1fad82dcd50c1a829e",
-            },
-          }
-        );
-        setReviews(response.data.results);
-      } catch (error) {
-        setError("Failed to fetch reviews.");
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchReviews();
+    getMovieReviews(movieId)
+      .then((response) => setReviews(response.data.results))
+      .catch(setError)
+      .finally(() => setLoading(false));
   }, [movieId]);
 
-  if (loading) return <p>Loading reviews...</p>;
-  if (error) return <p>{error}</p>;
-  if (!reviews.length) return <p>No reviews available.</p>;
+  if (loading) return <p>Loading...</p>;
+  if (error) return <p>Error loading reviews.</p>;
 
   return (
     <div>
-      <h2>Reviews</h2>
+      <h3>Reviews</h3>
       <ul>
         {reviews.map((review) => (
           <li key={review.id}>
-            <p>
-              <strong>{review.author}</strong>: {review.content}
-            </p>
+            <h4>{review.author}</h4>
+            <p>{review.content}</p>
           </li>
         ))}
       </ul>
     </div>
   );
-};
+}
 
 export default MovieReviews;

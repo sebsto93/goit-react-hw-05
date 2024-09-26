@@ -1,54 +1,33 @@
-import React, { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import axios from "axios";
+import { getMovieCast } from "../Api";
 
-const MovieCast = () => {
+function MovieCast() {
   const { movieId } = useParams();
   const [cast, setCast] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    const fetchCast = async () => {
-      try {
-        setLoading(true);
-        const response = await axios.get(
-          `https://api.themoviedb.org/3/movie/${movieId}/credits`,
-          {
-            headers: {
-              Authorization: "Bearer b910f513a7d30f1fad82dcd50c1a829e",
-            },
-          }
-        );
-        setCast(response.data.cast);
-      } catch (error) {
-        setError("Failed to fetch cast data.");
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchCast();
+    getMovieCast(movieId)
+      .then((response) => setCast(response.data.cast))
+      .catch(setError)
+      .finally(() => setLoading(false));
   }, [movieId]);
 
-  if (loading) return <p>Loading cast...</p>;
-  if (error) return <p>{error}</p>;
-  if (!cast.length) return <p>No cast information available.</p>;
+  if (loading) return <p>Loading...</p>;
+  if (error) return <p>Error loading cast.</p>;
 
   return (
     <div>
-      <h2>Cast</h2>
+      <h3>Cast</h3>
       <ul>
         {cast.map((member) => (
-          <li key={member.cast_id}>
-            <p>
-              <strong>{member.name}</strong> as {member.character}
-            </p>
-          </li>
+          <li key={member.id}>{member.name}</li>
         ))}
       </ul>
     </div>
   );
-};
+}
 
 export default MovieCast;

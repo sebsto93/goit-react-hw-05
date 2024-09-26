@@ -16,3 +16,4 @@ export const searchMovies = (query) => api.get(`/search/movie?query=${query}`);
 export const getMovieDetails = (id) => api.get(`/movie/${id}`);
 export const getMovieCredits = (id) => api.get(`/movie/${id}/credits`);
 export const getMovieReviews = (id) => api.get(`/movie/${id}/reviews`);
+export const getMovieCast = (id) => api.get(`/movie/${id}/credits`);
