@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { getTrendingMovies } from "../Api";
 import MovieList from "../components/MovieList";
 import styles from "./HomePage.module.css";
+import ClipLoader from "react-spinners/ClipLoader";
 
 function HomePage() {
   const [movies, setMovies] = useState([]);
@@ -15,7 +16,13 @@ function HomePage() {
       .finally(() => setLoading(false));
   }, []);
 
-  if (loading) return <p>Loading...</p>;
+  if (loading) {
+    return (
+      <div className={styles.loaderContainer}>
+        <ClipLoader color={"#123abc"} loading={loading} size={150} />
+      </div>
+    );
+  }
   if (error) return <p>Error loading movies.</p>;
 
   return (
