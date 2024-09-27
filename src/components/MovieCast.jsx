@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { getMovieCast } from "../Api";
 import styles from "./MovieCast.module.css";
+import ClipLoader from "react-spinners/ClipLoader";
 
 function MovieCast() {
   const { movieId } = useParams();
@@ -16,8 +17,14 @@ function MovieCast() {
       .finally(() => setLoading(false));
   }, [movieId]);
 
-  if (loading) return <p>Loading...</p>;
-  if (error) return <p>Error loading cast.</p>;
+  if (loading) {
+    return (
+      <div className={styles.loaderContainer}>
+        <ClipLoader color={"#123abc"} loading={loading} size={150} />
+      </div>
+    );
+  }
+  if (error) return <p>Error loading casts.</p>;
 
   return (
     <div className={styles.castList}>

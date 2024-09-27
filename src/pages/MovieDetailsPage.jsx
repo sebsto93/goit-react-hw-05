@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useParams, Link, NavLink, Outlet } from "react-router-dom";
 import { getMovieDetails } from "../Api";
 import styles from "./MovieDetailsPage.module.css";
+import ClipLoader from "react-spinners/ClipLoader";
 
 function MovieDetailsPage() {
   const { movieId } = useParams();
@@ -16,7 +17,13 @@ function MovieDetailsPage() {
       .finally(() => setLoading(false));
   }, [movieId]);
 
-  if (loading) return <p>Loading...</p>;
+  if (loading) {
+    return (
+      <div className={styles.loaderContainer}>
+        <ClipLoader color={"#123abc"} loading={loading} size={150} />
+      </div>
+    );
+  }
   if (error) return <p>Error loading movie details.</p>;
 
   return (
