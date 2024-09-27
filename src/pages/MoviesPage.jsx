@@ -4,6 +4,7 @@ import { searchMovies } from "../Api";
 import MovieList from "../components/MovieList";
 import styles from "./MoviesPage.module.css";
 import ClipLoader from "react-spinners/ClipLoader";
+import useDebounce from "../hooks/useDebounce";
 
 function MoviesPage() {
   const [movies, setMovies] = useState([]);
@@ -12,11 +13,12 @@ function MoviesPage() {
   const [searchParams, setSearchParams] = useSearchParams();
 
   const query = searchParams.get("query") || "";
+  const debouncedQuery = useDebounce(query, 300);
 
   useEffect(() => {
-    if (query) {
+    if (debouncedQuery) {
       setLoading(true);
-      searchMovies(query)
+      searchMovies(debouncedQuery)
         .then((response) => {
           if (response.data.results.length === 0) {
             throw new Error("No movies found for this query.");
@@ -33,8 +35,10 @@ function MoviesPage() {
           }
         })
         .finally(() => setLoading(false));
+    } else {
+      setMovies([]);
     }
-  }, [query]);
+  }, [debouncedQuery]);
 
   const handleSearch = (e) => {
     e.preventDefault();
