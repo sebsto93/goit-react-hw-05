@@ -17,8 +17,21 @@ function MoviesPage() {
     if (query) {
       setLoading(true);
       searchMovies(query)
-        .then((response) => setMovies(response.data.results))
-        .catch(setError)
+        .then((response) => {
+          if (response.data.results.length === 0) {
+            throw new Error("No movies found for this query.");
+          }
+          setMovies(response.data.results);
+        })
+        .catch((error) => {
+          if (!error.response) {
+            setError("Network error. Please check your internet connection.");
+          } else if (error.response.status === 404) {
+            setError("No results found for this query.");
+          } else {
+            setError("Something went wrong. Please try again.");
+          }
+        })
         .finally(() => setLoading(false));
     }
   }, [query]);
@@ -37,7 +50,9 @@ function MoviesPage() {
       </div>
     );
   }
-  if (error) return <p>Error loading movies.</p>;
+  if (error) {
+    return <p className={styles.errorMessage}>{error}</p>;
+  }
 
   return (
     <div className={styles.moviesPage}>
